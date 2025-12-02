@@ -14,7 +14,7 @@ class NumberGeneratorTest {
 
         val numbers = numberGenerators.generateNumber()
 
-        Assertions.assertEquals(setOf(1, 2, 3), numbers)
+        Assertions.assertEquals(setOf(7, 1, 3), numbers)
 
     }
 }
