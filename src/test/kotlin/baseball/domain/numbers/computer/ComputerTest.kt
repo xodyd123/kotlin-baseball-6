@@ -29,7 +29,7 @@ class ComputerTest {
     }
 
     @Test
-    fun `컴퓨터 계산 결과가 3개가 스트라이크일때`(){
+    fun `컴퓨터 계산 결과가 모두 스트라이크일때`(){
 
         computer = Computer(FixedNumberGenerator)
 
@@ -49,6 +49,57 @@ class ComputerTest {
 
         val result = computer.circulateNumber("456")
 
+        assertEquals("낫싱" , result)
+    }
+
+    @Test
+    fun `컴퓨터 계산 결과가 3볼일때`(){
+
+        computer = Computer(FixedNumberGenerator)
+
+        computer.generateNumber()
+
+        val result = computer.circulateNumber("371")
+
+        assertEquals("3볼" , result)
+    }
+
+    @Test
+    fun `컴퓨터 계산 결과가 스트라이크만 있을때`(){
+
+        computer = Computer(FixedNumberGenerator)
+
+        computer.generateNumber()
+
+        val result = computer.circulateNumber("216")
+
+        assertEquals("1스트라이크" , result)
+    }
+
+    @Test
+    fun `컴퓨터 계산 결과가 볼만 일을때`(){
+
+        computer = Computer(FixedNumberGenerator)
+
+        computer.generateNumber()
+
+        val result = computer.circulateNumber("671")
+
+        assertEquals("2볼" , result)
+    }
+
+    @Test
+    fun `컴퓨터 계산 결과가 1스트라이크 1볼 일때`(){
+
+        computer = Computer(FixedNumberGenerator)
+
+        computer.generateNumber()
+
+        val result = computer.circulateNumber("123")
+
         assertEquals("1볼 1스트라이크" , result)
     }
+
+
+
 }

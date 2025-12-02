@@ -17,14 +17,37 @@ class Computer(private val numberGenerator: NumberGenerator) {
 
     fun convertNumbers(inputs : String) : List<Int> {
         val convertNumbers = inputs.map { stringInput -> stringInput.digitToInt()  }
+
         return convertNumbers
     }
 
     fun circulateNumber(inputs  : String) : String {
+
+        var bollCount = 0
+
+        var strikeCount = 0
+
         val convertNumbers = convertNumbers(inputs)
 
-        if (convertNumbers[0] == numbers[0] && convertNumbers[1] == numbers[1] && convertNumbers[2] == numbers[2]) {
-            return "3스트라이크"
+        for (i in convertNumbers.indices) {
+            if (convertNumbers[i] == numbers[i]) {
+                strikeCount++
+            }
+            else if (numbers.contains(convertNumbers[i])) {
+                bollCount++
+            }
+        }
+
+        if (strikeCount>0 && bollCount>0){
+            return "${bollCount}볼 ${strikeCount}스트라이크"
+        }
+
+        if (strikeCount > 0){
+            return "${strikeCount}스트라이크"
+        }
+
+        if (bollCount > 0) {
+            return "${bollCount}볼"
         }
 
         return "낫싱"
