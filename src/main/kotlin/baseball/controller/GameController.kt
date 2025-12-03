@@ -1,11 +1,11 @@
 package baseball.controller
 
 import baseball.domain.computer.Computer
-import baseball.view.OutputView
+import baseball.presenter.GameResultPresenter
 import baseball.view.InPutView
 
 class GameController(
-    private val outputView: OutputView,
+    private val presenter: GameResultPresenter,
     private val inputView: InPutView,
     private val computer: Computer
 ) {
@@ -15,11 +15,10 @@ class GameController(
     }
 
     fun run() {
-        outputView.startGamePrompt()
+        presenter.showStartGame()
 
         while (true) {
             computer.generateNumber()
-
             playSingleGame()
 
             if(!askRestart()){
@@ -30,10 +29,10 @@ class GameController(
 
     private fun playSingleGame() {
         while (true) {
-            outputView.inputNumberPrompt()
+            presenter.showInputPrompt()
             val guess = inputView.readLine()
             val gameResult = computer.circulateNumber(guess)
-            outputView.gameResult(gameResult)
+            presenter.present(gameResult)
 
             if (gameResult.isFinished) {
                 return
