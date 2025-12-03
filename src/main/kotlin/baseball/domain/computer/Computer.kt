@@ -1,14 +1,15 @@
 package baseball.domain.computer
 
 import baseball.domain.number.NumberGenerator
+import baseball.dto.GameResultDto
 
 class Computer(private val numberGenerator: NumberGenerator) {
 
-    private val numbers = mutableListOf<Int>()
+    private var numbers = listOf<Int>()
 
     fun generateNumber(){
         val generateNumbers = numberGenerator.generateNumber()
-        generateNumbers.forEach { number -> numbers.add(number) }
+        numbers = generateNumbers.toList()
     }
 
     fun getNumbers() : List<Int> {
@@ -21,38 +22,22 @@ class Computer(private val numberGenerator: NumberGenerator) {
         return convertNumbers
     }
 
-    fun circulateNumber(inputs  : String) : String {
-
-        var bollCount = 0
-
-        var strikeCount = 0
+    fun circulateNumber(inputs  : String) : GameResultDto {
+        val gameResultDto = GameResultDto(0, 0, false)
 
         val convertNumbers = convertNumbers(inputs)
 
         for (i in convertNumbers.indices) {
             if (convertNumbers[i] == numbers[i]) {
-                strikeCount++
+                gameResultDto.strikeCount++
+            } else if (numbers.contains(convertNumbers[i])) {
+                gameResultDto.ballCount++
             }
-            else if (numbers.contains(convertNumbers[i])) {
-                bollCount++
-            }
         }
+        if(gameResultDto.strikeCount == 3) gameResultDto.isFinished = true
 
-        if (strikeCount>0 && bollCount>0){
-            return "${bollCount}볼 ${strikeCount}스트라이크"
-        }
-
-        if (strikeCount > 0){
-            return "${strikeCount}스트라이크"
-        }
-
-        if (bollCount > 0) {
-            return "${bollCount}볼"
-        }
-
-        return "낫싱"
+        return gameResultDto
 
     }
-
 
 }
